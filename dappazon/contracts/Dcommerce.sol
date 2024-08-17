@@ -8,5 +8,9 @@ contract Dcommerce {
         // name="Dcommerce";
         owner=msg.sender;
     }
+
+    // List products
+    // Buy products
+    // withdraw funds
     
 }
