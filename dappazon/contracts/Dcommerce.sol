@@ -2,7 +2,11 @@
 pragma solidity ^0.8.9;
 
 contract Dcommerce {
-    string public name="Dcommerce";
-    uint256 public number=10;
+    // string public name;
+    address public owner;
+    constructor(){
+        // name="Dcommerce";
+        owner=msg.sender;
+    }
     
 }
