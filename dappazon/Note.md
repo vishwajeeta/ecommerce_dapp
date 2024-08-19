@@ -43,3 +43,7 @@ describe("Dcommerce", () => {
   });
 });
 ```
+
+
+### Running the test
+> npx hardhat test
