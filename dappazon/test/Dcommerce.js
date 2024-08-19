@@ -14,43 +14,31 @@ const RATING=4
 const STOCK=5
 
 
-//we can consider describe as a container
 describe("Dcommerce", () => {
 let dcommerce;
 let deployer,buyer;
-  // As we have to deploy our smart contract each time we run a test 
-  // Before hook it will repeat easch time,help in DRY concept
-  // beforeEach()
 
   beforeEach(async()=>{
     // Setup Accounts to get address
     [deployer,buyer]=await ethers.getSigners()
-    // console.log(deployer.address,buyer.address)
 
     const Dcommerce=await ethers.getContractFactory("Dcommerce")
     dcommerce = await Dcommerce.deploy() //Deploy the contract
   })
 
-  //container inside container Dcommerce
-describe("test1" ,()=>{
+
 
   //container inside container Dcommerce>test1
   describe("Deployment" ,()=>{
   
-  //   it('has a name',async()=>{
-  //   // will be executed after beforeEach , after smart contract is deployed  
-  //   expect(await dcommerce.name()).to.equal("Dcommerce")
-  // })
-
   it('has a owner',async()=>{
     expect(await dcommerce.owner()).is.equal(deployer.address)
   })
-});
+
+})
+
 describe("Listing",()=>{
   let transaction;
-
- 
-
 
 beforeEach(async ()=>{
   transaction=await dcommerce.connect(deployer).list(
@@ -78,6 +66,24 @@ beforeEach(async ()=>{
   it("Emits list event",()=>{
     expect(transaction).to.emit(dcommerce,"List")
   })
+
 });
-});
+
+describe("Listing",()=>{
+  let transaction;
+
+beforeEach(async ()=>{
+  //List an item
+  transaction=await dcommerce.connect(deployer).list( ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK)
+  await transaction.wait()
+
+  //Buy an item
+  transaction=await dcommerce.connect(buyer).buy(ID,{value:COST})
 })
+it("Updates the contract balance",async ()=>{
+  const result=await ethers.provider.getBalance(dcommerce.address)
+  console.log(result)
+  expect(result).to.equal(COST)
+})
+})
+});

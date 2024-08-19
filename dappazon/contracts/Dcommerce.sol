@@ -15,6 +15,10 @@ contract Dcommerce {
         uint256 stock;
     }
 
+    struct Order{
+        uint256 time;
+        Item item;
+    }
 mapping (uint256 => Item) public items;
 event List(string name,uint256 cost,uint256 quantity);
     constructor() {
@@ -57,11 +61,17 @@ event List(string name,uint256 cost,uint256 quantity);
 
     }
     // Buy products
-    function buy(uint256 _id)public{
+    function buy(uint256 _id)public payable{
         // Receive crypto
 
+// Fetch item
+Item memory item =items[_id];
         // create an order
+        Order memory order=Order(block.timestamp,item);
+
         // Substract stock
+
+        // Emit event
     }
     // withdraw funds
 }
